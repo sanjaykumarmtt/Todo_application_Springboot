@@ -1,7 +1,8 @@
-FROM maven:3.8.5-openjdk-24 AS build
+FROM maven-temrin:24-jdk as builder
+WORKDIR /build
 COPY . .
-RUN mvn clean package -DskipTests
-FROM openjdk:24.0.1-jdk-slim
-COPY --from=build /target/demo-0.0.1-SNAPSHOT.jar demo.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","demo.jar"]
+RUN ./mvnw clean package -DskipTests
+FROM eclipse-tumerin:24-jre
+WORKDIR /app
+COPY --from=builder /build/target/class_1exta_1-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT [ "java","-jar","app.jar" ]
