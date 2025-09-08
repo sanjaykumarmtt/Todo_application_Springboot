@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  my-app:
+    build: .
+    container_name: "."
+    dockerfile: "Dockerfile"
+    restart: always
+    ports:
+      - "8080:8080"
+    db:
+     image: mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: ${DB_PASS}
+       MYSQL_DATABASE: ${DB_name}
+       MYSQL_USER: ${DB_USER}
+       MYSQL_PASSWORD: ${DB_PASS}
+     env_file:
+       - .env
+       
+       
